@@ -78,7 +78,7 @@ public class MainFrame extends JFrame{
 		int option = JOptionPane.showConfirmDialog(null, message, "Choose server", JOptionPane.OK_CANCEL_OPTION);
 		
 		if (option == JOptionPane.OK_OPTION) {
-			Server server = new Server("192.168.110.5",9123);
+			Server server = new Server("151.237.240.15",9123);
 		//	Server server = new Server(host.getText(), Integer.valueOf( port.getText() ) );
 			netInteractionController = new NetInteractionController(server);			
 		}

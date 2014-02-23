@@ -2,17 +2,34 @@ package gui.view.panel;
 
 import gui.controller.NetInteractionController;
 import gui.model.Server;
+import gui.view.table.Table;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.yaml.snakeyaml.Yaml;
+
 public class ToolsPanel extends JPanel {
+	private static Map<String, List<String>> devicesInfo;
+
+	public static Map<String, List<String>> getDevicesInfo()
+		{
+			return devicesInfo;
+		}
+
+	public static void setDevicesInfo(Map<String, List<String>> devicesInfo)
+		{
+			ToolsPanel.devicesInfo = devicesInfo;
+		}
 
 	private static final long serialVersionUID = 5802953052002312498L;
 
@@ -53,7 +70,8 @@ public class ToolsPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				try {
-					String devicesInfo = netInteractionController.getDeviceInfo("7_yarus");
+					devicesInfo = netInteractionController.getDeviceInfo("7_yarus");
+					setDevicesInfo(devicesInfo);
 					JOptionPane.showMessageDialog(ToolsPanel.this, devicesInfo);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -61,6 +79,19 @@ public class ToolsPanel extends JPanel {
 				}
 			}
 		});
+		
+		maintainceButton.addActionListener(new ActionListener() 
+			{
+				@Override
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					Table t = new Table();
+					t.setRows(5);
+					t.setColumns(5);
+					t.setName("DevInfo");
+					t.createFrame();
+				}
+			});
 	}
 	
 }

@@ -4,6 +4,7 @@ import gui.model.Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,6 +13,10 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
+import java.util.Map;
+
+import org.yaml.snakeyaml.Yaml;
 
 import util.YAMLConverter;
 
@@ -58,12 +63,12 @@ public class NetInteractionController {
 	public boolean testConnection() throws IOException{
 		sendMessageToServer(ECHO_MESSAGE);
 		
-		String result = receiveMessageFromServer();
+		Map<String, List<String>> result = receiveMessageFromServer();
 		
 		return result.equals(ECHO_OUTPUT);
 	}
 	
-	public String getDeviceInfo(String deviceName) throws IOException
+	public Map<String, List<String>> getDeviceInfo(String deviceName) throws IOException
 	{
 	
 		String request = yamlConverter.deviceToNameRequest(deviceName);
@@ -72,15 +77,21 @@ public class NetInteractionController {
 		
 	}
 
-	private String receiveMessageFromServer() throws IOException{
+	private Map<String, List<String>> receiveMessageFromServer() throws IOException{
+		Yaml yaml = new Yaml();
+		
 		InputStream is = socket.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
-		BufferedReader br = new BufferedReader(isr);
+	    BufferedReader br = new BufferedReader(isr);
 		String message = br.readLine();
-
+		
+		InputStream in = new FileInputStream("yaml.yaml");
+		//Object message = yaml.load(is);
+		Map<String, List <String>> data = (Map<String, List<String>>) yaml.load(in);
+		System.out.println(data.get("OutErrors"));
 		is.close();
 		
-		return message;
+		return data;
 	}
 		
 	private void sendMessageToServer(String message) throws IOException{
