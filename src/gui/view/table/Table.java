@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 public class Table extends JFrame
@@ -66,7 +67,8 @@ class AllTableFrame extends JFrame
 					setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 					
 					TableModel model = new AllTableModel(getRows(),getColumns());		
-					JTable table = new JTable(model);					
+					JTable table = new JTable(model);	
+
 					add(new JScrollPane(table));
 					
 				}
@@ -100,13 +102,13 @@ class AllTableFrame extends JFrame
 				{
 					// TODO Auto-generated method stub
 					Map<String, List<String>> device = ToolsPanel.getDevicesInfo();
-					int index = 0;
-					switch(arg1)
-					{
-						case 0: { List<String> err = device.get("OutErrors"); return err;}
-						case 1: return "2";
-					}
-					return "";
+	
+				//	List<String> col = device.get(arg1);
+
+					List<String> err = device.get(arg1);
+
+					return err.get(arg0+1);
+
 				}
 			
 			public String getColumnName()

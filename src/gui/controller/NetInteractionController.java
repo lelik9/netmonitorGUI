@@ -13,6 +13,7 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,14 +84,21 @@ public class NetInteractionController {
 		InputStream is = socket.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
 	    BufferedReader br = new BufferedReader(isr);
-		String message = br.readLine();
-		
 		InputStream in = new FileInputStream("yaml.yaml");
-		//Object message = yaml.load(is);
-		Map<String, List <String>> data = (Map<String, List<String>>) yaml.load(in);
-		System.out.println(data.get("OutErrors"));
-		is.close();
+		Map<String, List <String>> data ;
+		data =new HashMap<String, List<String>>();
 		
+		while(true)
+			{
+				System.out.println(br);
+				String message = br.readLine();
+				data.putAll((Map<String, List<String>>) yaml.load(message));
+
+				System.out.println(br);
+				if(br.ready()==false) {break;}
+			}
+		is.close();
+		System.out.println(data);
 		return data;
 	}
 		

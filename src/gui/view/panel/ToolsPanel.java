@@ -87,8 +87,7 @@ public class ToolsPanel extends JPanel {
 				{
 					Table t = new Table();
 					t.setRows(5);
-					t.setColumns(5);
-					t.setName("DevInfo");
+					t.setColumns(2);
 					t.createFrame();
 				}
 			});
