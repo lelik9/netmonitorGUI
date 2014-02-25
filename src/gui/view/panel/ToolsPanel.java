@@ -19,14 +19,25 @@ import javax.swing.JPanel;
 import org.yaml.snakeyaml.Yaml;
 
 public class ToolsPanel extends JPanel {
-	private static Map<String, List<String>> devicesInfo;
+	private static Map<Integer, List<String>> devicesInfo;
+	private static Map<Integer, List<String>> devicesName;
+	
+	public static Map<Integer, List<String>> getDevicesName()
+		{
+				return devicesName;
+		}
 
-	public static Map<String, List<String>> getDevicesInfo()
+	public static void setDevicesName(Map<Integer, List<String>> devicesName)
+		{
+				ToolsPanel.devicesName = devicesName;
+		}
+
+	public static Map<Integer, List<String>> getDevicesInfo()
 		{
 			return devicesInfo;
 		}
 
-	public static void setDevicesInfo(Map<String, List<String>> devicesInfo)
+	public static void setDevicesInfo(Map<Integer, List<String>> devicesInfo)
 		{
 			ToolsPanel.devicesInfo = devicesInfo;
 		}
@@ -69,10 +80,17 @@ public class ToolsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				Table t = new Table();
 				try {
-					devicesInfo = netInteractionController.getDeviceInfo("7_yarus");
+					devicesInfo = netInteractionController.getDeviceInfo("extintinfo", "7_yarus");
 					setDevicesInfo(devicesInfo);
-					JOptionPane.showMessageDialog(ToolsPanel.this, devicesInfo);
+					
+					devicesName = netInteractionController.getDeviceName("devices", "0");
+					setDevicesName(devicesName);
+					
+					t.setRows(1);
+					t.setColumns(16);
+					t.createFrame("Extended Interface Information");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,10 +103,16 @@ public class ToolsPanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent arg0) 
 				{
-					Table t = new Table();
-					t.setRows(5);
-					t.setColumns(2);
-					t.createFrame();
+
+					try
+						{
+							devicesInfo = netInteractionController.getDeviceName("devices", "0");
+							System.out.println(devicesInfo);
+						} catch (IOException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				}
 			});
 	}

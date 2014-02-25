@@ -13,10 +13,10 @@ public class YAMLConverter {
 		yaml = new Yaml();
 	}
 	
-	public String deviceToNameRequest(String deviceName){
+	public String deviceToNameRequest(String deviceName, String func){
 		Map<String, Object> data = new HashMap<String, Object>();
 		
-		data.put("func", "extintinfo");
+		data.put("func", func);
 		data.put("device", deviceName);
 		
 		String output = yaml.dump(data);

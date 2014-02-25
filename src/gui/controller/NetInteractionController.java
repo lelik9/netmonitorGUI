@@ -64,45 +64,48 @@ public class NetInteractionController {
 	public boolean testConnection() throws IOException{
 		sendMessageToServer(ECHO_MESSAGE);
 		
-		Map<String, List<String>> result = receiveMessageFromServer();
+		Map<Integer, List<String>> result = receiveMessageFromServer();
 		
 		return result.equals(ECHO_OUTPUT);
 	}
 	
-	public Map<String, List<String>> getDeviceInfo(String deviceName) throws IOException
+	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) throws IOException
 	{
 	
-		String request = yamlConverter.deviceToNameRequest(deviceName);
+		String request = yamlConverter.deviceToNameRequest(func, deviceName);
 		sendMessageToServer(request);
 		return receiveMessageFromServer(); 
 		
 	}
 
-	private Map<String, List<String>> receiveMessageFromServer() throws IOException{
+	public Map<Integer, List<String>> getDeviceName(String deviceName, String func) throws IOException
+		{
+			String request = yamlConverter.deviceToNameRequest(func, deviceName);
+			sendMessageToServer(request);
+
+			return receiveMessageFromServer(); 
+		}
+	private Map<Integer, List<String>> receiveMessageFromServer() throws IOException{
 		Yaml yaml = new Yaml();
 		
 		InputStream is = socket.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
 	    BufferedReader br = new BufferedReader(isr);
-		InputStream in = new FileInputStream("yaml.yaml");
-		Map<String, List <String>> data ;
-		data =new HashMap<String, List<String>>();
-		
-		while(true)
-			{
-				System.out.println(br);
-				String message = br.readLine();
-				data.putAll((Map<String, List<String>>) yaml.load(message));
 
-				System.out.println(br);
-				if(br.ready()==false) {break;}
+		Map<Integer, List <String>> data = new HashMap<Integer, List<String>>() ;
+		String message;
+		
+		while(((message = br.readLine()) != null) && !("".equals(message)))
+			{
+				data.putAll((Map<Integer, List<String>>) yaml.load(message));			
 			}
-		is.close();
-		System.out.println(data);
+		
+	//	is.close();
+	//	System.out.println(data);
 		return data;
 	}
 		
-	private void sendMessageToServer(String message) throws IOException{
+	public void sendMessageToServer(String message) throws IOException{
 		OutputStream os = socket.getOutputStream();
 		OutputStreamWriter osw = new OutputStreamWriter(os);
 		
