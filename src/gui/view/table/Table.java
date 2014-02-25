@@ -2,14 +2,20 @@ package gui.view.table;
 
 
 
+import gui.controller.NetInteractionController;
 import gui.view.panel.ToolsPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,6 +36,7 @@ public class Table extends JFrame
 	private static int rows;
 	private static int columns;
 	private static String Name;
+	private NetInteractionController netInteractionController;
 
 		public String getName()
 		{
@@ -64,26 +71,25 @@ public class Table extends JFrame
 			}
 class AllTableFrame extends JFrame
 {
+			private NetInteractionController netInteractionController;
+
 			public  AllTableFrame()
 				{
 					
 					//setTitle("Extended Interface Info");
 					setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-					String[] items = {
-				            "Ёлемент списка 1",
-				            "Ёлемент списка 2",
-				            "Ёлемент списка 3"
-				        };
-					Map<Integer, List<String>> devicesName = ToolsPanel.getDevicesName();
-				//	String[] items = devicesName.get(1);
 					TableModel model = new AllTableModel(getRows(),getColumns());
-					JComboBox comboBox = new JComboBox(items);
+					
+					JComboBox comboBox = new JComboBox(new MyComboBoxModel());
+					comboBox.addActionListener(actionListener);
+					
 					JPanel comboPanel = new JPanel();
 					comboPanel.add(comboBox);
 					add(comboPanel, BorderLayout.NORTH);
+					
 					JTable table = new JTable(model);	
 					add(new JScrollPane(table));
-					
+
 				}
 		
 }
@@ -140,4 +146,43 @@ class AllTableFrame extends JFrame
 				}
 			
 		}
+		class MyComboBoxModel extends AbstractListModel implements ComboBoxModel 
+		{
+				Map<Integer, List<String>> devicesName = ToolsPanel.getDevicesName();
+				List<String> devName = devicesName.get(1);				
+				List<String> Device = devName;
+
+			  String selection = null;
+
+			  public Object getElementAt(int index) 
+				  {
+					  setName(Device.get(index));
+					 return Device.get(index);
+				  }
+
+			  public int getSize() {
+			    return Device.size();
+			  }
+
+			  public void setSelectedItem(Object anItem) {
+			    selection = (String) anItem; // to select and register an
+			  } // item from the pull-down list
+
+			  // Methods implemented from the interface ComboBoxModel
+			  public Object getSelectedItem() {
+			    return selection; // to add the selection to the combo box
+			  }
+			}
+		
+
+		ActionListener actionListener = new ActionListener() 
+			{
+            public void actionPerformed(ActionEvent e) 
+            	{
+            		
+            		String selection = getName();
+            		System.out.println("1");
+					//devicesInfo = netInteractionController.getDeviceInfo("extintinfo", "7_yarus");
+            	}
+			};
 }

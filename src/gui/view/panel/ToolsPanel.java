@@ -106,8 +106,8 @@ public class ToolsPanel extends JPanel {
 
 					try
 						{
-							devicesInfo = netInteractionController.getDeviceName("devices", "0");
-							System.out.println(devicesInfo);
+							devicesInfo = netInteractionController.getDeviceInfo("extintinfo", "7_yarus");
+							setDevicesInfo(devicesInfo);
 						} catch (IOException e)
 						{
 							// TODO Auto-generated catch block
