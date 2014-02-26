@@ -71,13 +71,16 @@ public class NetInteractionController {
 	
 	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) throws IOException
 	{
-		System.out.println("IN");
 		String request = yamlConverter.deviceToNameRequest(func, deviceName);
 		sendMessageToServer(request);
 		return receiveMessageFromServer(); 
 		
 	}
-
+	public static void Sysout()
+		{
+			System.out.println("OUT");
+		}
+	
 	public Map<Integer, List<String>> getDeviceName(String deviceName, String func) throws IOException
 		{
 			String request = yamlConverter.deviceToNameRequest(func, deviceName);

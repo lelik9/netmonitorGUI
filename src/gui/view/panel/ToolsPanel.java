@@ -82,6 +82,7 @@ public class ToolsPanel extends JPanel {
 			{
 				Table t = new Table();
 				try {
+
 					devicesInfo = netInteractionController.getDeviceInfo("extintinfo", "7_yarus");
 					setDevicesInfo(devicesInfo);
 					
@@ -90,6 +91,7 @@ public class ToolsPanel extends JPanel {
 					
 					t.setRows(1);
 					t.setColumns(16);
+					t.Table(netInteractionController);
 					t.createFrame("Extended Interface Information");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
