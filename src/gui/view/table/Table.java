@@ -71,7 +71,7 @@ public class Table extends JFrame
 			{
 				
 				JFrame frame = new AllTableFrame(netInteractionController);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				frame.setVisible(true);
 				frame.setTitle(title);
 				System.out.println(netInteractionController);

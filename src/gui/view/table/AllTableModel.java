@@ -48,7 +48,7 @@ public class AllTableModel extends AbstractTableModel
 
 				List<String> err = device.get(arg1);
 				row = err.size()-1;
-				getColumnName(arg1);
+			//	getColumnName(arg1);
 				String data = err.get(arg0+1);
 				if(data == null){data = "0";}
 				

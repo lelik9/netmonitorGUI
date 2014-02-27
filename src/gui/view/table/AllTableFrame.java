@@ -1,6 +1,7 @@
 package gui.view.table;
 
 import gui.controller.NetInteractionController;
+import gui.view.panel.ToolsPanel;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -21,7 +22,7 @@ class AllTableFrame extends JFrame
 	private NetInteractionController netInteractionController;
 	private int DEFAULT_WIDTH = 800;
 	private int DEFAULT_HEIGHT = 600;
-	
+	private AllTableModel allTableModel;
 	public  AllTableFrame(NetInteractionController netInteractionController)
 			{
 				
@@ -32,11 +33,12 @@ class AllTableFrame extends JFrame
 				comboBox.addActionListener(actionListener);
 				
 				JPanel comboPanel = new JPanel();
-				comboPanel.add(comboBox);
+				comboPanel.add(comboBox, BorderLayout.EAST );
 				add(comboPanel, BorderLayout.NORTH);
 				
 				JTable table = new JTable(model);	
-				add(new JScrollPane(table));
+				table.setLayout(new BorderLayout());
+				add(new JScrollPane(table), BorderLayout.CENTER);
 				this.netInteractionController = netInteractionController;
 
 				
@@ -49,10 +51,13 @@ class AllTableFrame extends JFrame
 	    		String selection = MyComboBoxModel.getName();
 	    		System.out.println(selection);
 	    		Table t = new Table();
+
 				try
 					{
 
 						Map<Integer, List<String>> devicesInfo = netInteractionController.getDeviceInfo("extintinfo", selection);
+			    //		ToolsPanel.setDevicesInfo(devicesInfo);
+				//		allTableModel.getValueAt(allTableModel.getRowCount(), allTableModel.getColumnCount());
 						System.out.println(devicesInfo);
 					//	t.setRows(1);
 					//	t.setColumns(16);

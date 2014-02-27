@@ -72,6 +72,7 @@ public class NetInteractionController {
 	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) throws IOException
 	{
 		String request = yamlConverter.deviceToNameRequest(func, deviceName);
+		System.out.println(request);
 		sendMessageToServer(request);
 		return receiveMessageFromServer(); 
 		
@@ -102,7 +103,7 @@ public class NetInteractionController {
 			{
 				data.putAll((Map<Integer, List<String>>) yaml.load(message));			
 			}
-
+		
 	//	is.close();
 	//	System.out.println(data);
 		return data;
@@ -114,10 +115,13 @@ public class NetInteractionController {
 		
 		BufferedWriter bufferedWriter = new BufferedWriter(osw);
 		
+	//	System.out.println(bufferedWriter.toString());
 		bufferedWriter.write(message);
+
+	//	System.out.println(bufferedWriter.toString());
 		bufferedWriter.flush();	
-		
-	
+
+
 		//os.close();
 		
 	}
