@@ -1,7 +1,6 @@
 package gui.controller;
 
 import gui.model.Server;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

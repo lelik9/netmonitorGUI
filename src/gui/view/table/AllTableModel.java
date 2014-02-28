@@ -55,6 +55,7 @@ public class AllTableModel extends AbstractTableModel
 			//	getColumnName(arg1);
 				String data = err.get(arg0+1);
 				if(data == null){data = "0";}
+				fireTableDataChanged();
 				
 				return data;
 
