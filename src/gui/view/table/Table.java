@@ -1,43 +1,23 @@
 package gui.view.table;
 
-
-
-import gui.controller.NetInteractionController;
-import gui.view.panel.ToolsPanel;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+import gui.controller.NetController;
 
 public class Table extends JFrame
 {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7530665374631112442L;
 	private static int rows;
 	private static int columns;
 	private static String Name;
 	
-	private NetInteractionController netInteractionController;
+	private NetController netController;
 
-		public String getName()
+	public String getName()
 		{
 			return Name;
 		}
@@ -62,19 +42,19 @@ public class Table extends JFrame
 			Table.columns = columns;
 		}
 		
-	public void Table(NetInteractionController netInteractionController)
+	public Table(NetController netController)
 		{
-			this.netInteractionController = netInteractionController;
+			this.netController = netController;
 		}
 	
 		public void createFrame(String title)
 			{
 				
-				JFrame frame = new AllTableFrame(netInteractionController);
+				JFrame frame = new AllTableFrame(netController);
 				frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				frame.setVisible(true);
 				frame.setTitle(title);
-				System.out.println(netInteractionController);
+				System.out.println(netController);
 
 			}
 		

@@ -1,6 +1,6 @@
 package gui.view;
 
-import gui.controller.NetInteractionController;
+import gui.controller.NetController;
 import gui.model.Server;
 import gui.view.panel.FastAccessPanel;
 import gui.view.panel.ToolsPanel;
@@ -30,7 +30,7 @@ public class MainFrame extends JFrame{
     private VisualPanel visualPanel;    
     private FastAccessPanel fastAccessPanel;
     
-    private NetInteractionController netInteractionController;
+    private NetController netController;
     
     public MainFrame(){
 	    initFrameCharacteristics();
@@ -78,9 +78,9 @@ public class MainFrame extends JFrame{
 		int option = JOptionPane.showConfirmDialog(null, message, "Choose server", JOptionPane.OK_CANCEL_OPTION);
 		
 		if (option == JOptionPane.OK_OPTION) {
-			Server server = new Server("151.237.240.15",9123);
+			Server server = new Server("192.168.110.5",9123);
 		//	Server server = new Server(host.getText(), Integer.valueOf( port.getText() ) );
-			netInteractionController = new NetInteractionController(server);			
+			netController = new NetController(server);			
 		}
 	}
 
@@ -92,7 +92,7 @@ public class MainFrame extends JFrame{
 		fastAccessPanel = new FastAccessPanel();
 		mainContentPanel.add(fastAccessPanel, BorderLayout.BEFORE_FIRST_LINE);
 
-		toolsPanel = new ToolsPanel(netInteractionController);
+		toolsPanel = new ToolsPanel(netController);
 		mainContentPanel.add(toolsPanel, BorderLayout.LINE_START);
 		
 		visualPanel = new VisualPanel();

@@ -3,43 +3,37 @@ package gui.controller;
 import gui.model.Server;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.yaml.snakeyaml.Yaml;
-
-import util.YAMLConverter;
 
 public class NetInteractionController {
 
 	private int serverPort;
 	private String serverHost;
 	
+	private InputStream is;
+	private InputStreamReader isr;
+	private BufferedReader br;
+    
+	private PrintWriter printWriter;
+	
 	private static final String ECHO_MESSAGE = "echo";
 	private static final String ECHO_OUTPUT = "ohce";
 	
 	private Socket socket;
 	
-	private YAMLConverter yamlConverter;
-	
 	public NetInteractionController(String serverHost, int serverPort) {
 		this.serverHost = serverHost;
 		this.serverPort = serverPort;
 		
-		yamlConverter = new YAMLConverter();
-		
 		establishConnection();
+		
 	}
 	
 	public NetInteractionController(Server server) {
@@ -59,71 +53,49 @@ public class NetInteractionController {
 			// FIXME add logging
 			e.printStackTrace();
 		}
+		
+		try {
+			is = socket.getInputStream();
+		} catch (IOException e) {
+			System.out.println("Socket in broken! Alarm!");
+			e.printStackTrace();
+		}
+		
+		isr = new InputStreamReader(is);
+	    br = new BufferedReader(isr);
+	    	
+		try {
+			printWriter = new PrintWriter(socket.getOutputStream(), true);
+		} catch (IOException e) {
+			System.out.println("Socket out broken! Alarm!");
+		}
 	}
 	
 	public boolean testConnection() throws IOException{
 		sendMessageToServer(ECHO_MESSAGE);
 		
-		Map<Integer, List<String>> result = receiveMessageFromServer();
+		String result = receiveMessageFromServer();
 		
 		return result.equals(ECHO_OUTPUT);
 	}
 	
-	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) throws IOException
-	{
-		String request = yamlConverter.deviceToNameRequest(func, deviceName);
-		System.out.println(request);
-		sendMessageToServer(request);
-		return receiveMessageFromServer(); 
-		
-	}
-	public static void Sysout()
-		{
-			System.out.println("OUT");
-		}
-	
-	public Map<Integer, List<String>> getDeviceName(String deviceName, String func) throws IOException
-		{
-			String request = yamlConverter.deviceToNameRequest(func, deviceName);
-			sendMessageToServer(request);
 
-			return receiveMessageFromServer(); 
-		}
-	private Map<Integer, List<String>> receiveMessageFromServer() throws IOException{
-		Yaml yaml = new Yaml();
-		
-		InputStream is = socket.getInputStream();
-		InputStreamReader isr = new InputStreamReader(is);
-	    BufferedReader br = new BufferedReader(isr);
+	public String receiveMessageFromServer() throws IOException {
+			
+	    String message;
+	    String returnMessage = "{";
 
-		Map<Integer, List <String>> data = new HashMap<Integer, List<String>>() ;
-		String message;
-		
 		while(((message = br.readLine()) != null) && !("".equals(message)))
 			{
-				data.putAll((Map<Integer, List<String>>) yaml.load(message));			
+				returnMessage = returnMessage.concat(message + ",");		
 			}
-		
-	//	is.close();
-	//	System.out.println(data);
-		return data;
+
+		return returnMessage + "}";
 	}
 		
 	public void sendMessageToServer(String message) throws IOException{
-		OutputStream os = socket.getOutputStream();
-		OutputStreamWriter osw = new OutputStreamWriter(os);
-		
-		BufferedWriter bufferedWriter = new BufferedWriter(osw);
-		
-	//	System.out.println(bufferedWriter.toString());
-		bufferedWriter.write(message);
-
-	//	System.out.println(bufferedWriter.toString());
-		bufferedWriter.flush();	
-
-
-		//os.close();
-		
+				
+		printWriter.println(message);
 	}
 	
 	public void test()
