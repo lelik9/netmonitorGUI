@@ -9,6 +9,10 @@ import javax.swing.table.AbstractTableModel;
 
 public class AllTableModel extends AbstractTableModel
 	{
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9184949332205401766L;
 		private static int row;
 		private static int column;
 		

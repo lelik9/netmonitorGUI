@@ -133,6 +133,7 @@ public class ToolsPanel extends JPanel {
 										devicesInfo = netController.getDeviceInfo("intinfo", "7_yarus");
 			        					setDevicesInfo(devicesInfo);
 			        					System.out.println(devicesInfo);
+			        					
 			        					devicesName = netController.getDeviceName("devices", "no");
 			        					setDevicesName(devicesName);
 			        					System.out.println(devicesName);

@@ -23,17 +23,18 @@ public class NetController {
 		netInteractionController = new NetInteractionController(server);		
 	}
 	
+	
 	public Map<Integer, List<String>> getDeviceName(String deviceName, String func) throws IOException
 	{
-		String request = yamlConverter.deviceToNameRequest(func, deviceName);
-		netInteractionController.sendMessageToServer(request);
-		Map<Integer, List <String>> data = new HashMap<Integer, List<String>>() ;
-		String message = netInteractionController.receiveMessageFromServer();
-		data.putAll((Map<Integer, List<String>>) yaml.load(message));
-		return data; 
+		return getInfo(deviceName, func); 
 	}
 	
 	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) throws IOException
+	{
+		return getInfo(deviceName, func); 
+	}
+	
+	public Map<Integer, List<String>> getInfo(String deviceName, String func) throws IOException
 	{
 		String request = yamlConverter.deviceToNameRequest(func, deviceName);
 		System.out.println("sended " + request);
@@ -44,8 +45,9 @@ public class NetController {
 		data.putAll((Map<Integer, List<String>>) yaml.load(message));			
 		
 		return data; 
-		
 	}
+	
+	
 	public static void Sysout()
 		{
 			System.out.println("OUT");
