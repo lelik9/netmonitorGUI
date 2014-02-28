@@ -12,7 +12,7 @@ public class MyComboBoxModel extends AbstractListModel implements ComboBoxModel
 	{
 		private static String Name;
 		
-		Map<Integer, List<String>> devicesName = ToolsPanel.getDevicesName();
+		Map<Integer, List<String>> devicesName = AllTableModel.getDeviceName();
 		List<String> devName = devicesName.get(1);				
 		List<String> Device = devName;
 

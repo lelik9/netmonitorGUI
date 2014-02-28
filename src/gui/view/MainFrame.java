@@ -78,7 +78,7 @@ public class MainFrame extends JFrame{
 		int option = JOptionPane.showConfirmDialog(null, message, "Choose server", JOptionPane.OK_CANCEL_OPTION);
 		
 		if (option == JOptionPane.OK_OPTION) {
-			Server server = new Server("192.168.110.5",9123);
+			Server server = new Server("151.237.240.15",9123);
 		//	Server server = new Server(host.getText(), Integer.valueOf( port.getText() ) );
 			netController = new NetController(server);			
 		}
@@ -114,16 +114,6 @@ public class MainFrame extends JFrame{
 		applicationMenu.add(setupServer);
 		applicationMenu.add(closeItem);
 		
-	    
-	/*    setupServer.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				Server server = showChooseServerDialog();
-				netInteractionController = new NetInteractionController(server);
-			}
-		});*/
-
 
 		topMenuBar.add(applicationMenu);
 		topMenuBar.add(applicationMenu);
@@ -151,25 +141,7 @@ public class MainFrame extends JFrame{
 		setJMenuBar(topMenuBar);
 
 	}
-/*	
-	private Server showChooseServerDialog(){
-		JTextField host = new JTextField();
-		JTextField port = new JPasswordField();
-		Object[] message = {
-		    "Host:", host,
-		    "Port:", port
-		};
-		
-		int option = JOptionPane.showConfirmDialog(null, message, "Choose server", JOptionPane.OK_CANCEL_OPTION);
-		
-		if (option == JOptionPane.OK_OPTION) {
-			Server server = new Server(host.getText(), Integer.valueOf( port.getText() ) );
-			
-			return server;
-		}
-		
-		return null;
-	}*/
+
 
 	private void initFrameCharacteristics(){
     	setTitle("Net Monitor v0.0.1");

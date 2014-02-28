@@ -12,7 +12,18 @@ public class NetController {
 	private YAMLConverter yamlConverter;
 	private Yaml yaml;
 	private NetInteractionController netInteractionController;
+	private String deviceName;
 	
+	public String getDeviceName() {
+		return deviceName;
+	}
+
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
+	}
+
+
 	public NetController(Server server) {
 		yaml = new Yaml();
 		yamlConverter = new YAMLConverter();
@@ -27,6 +38,7 @@ public class NetController {
 	
 	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) 
 	{
+		setDeviceName(func);
 		return getInfo(deviceName, func); 
 	}
 	

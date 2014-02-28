@@ -1,13 +1,16 @@
 package gui.view.table;
 
 import gui.controller.NetController;
+import gui.get.GetDeviceInfo;
 import gui.view.panel.ToolsPanel;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,11 +19,12 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 class AllTableFrame extends JFrame {
-	private NetController netController;
+	
+
 	private int DEFAULT_WIDTH = 800;
 	private int DEFAULT_HEIGHT = 600;
-	private AllTableModel allTableModel;
-
+	private static String function;
+	
 	public AllTableFrame(final NetController netController) {
 
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -28,38 +32,30 @@ class AllTableFrame extends JFrame {
 				Table.getColumns());
 		
 		JPanel comboPanel = new JPanel();
-
-
-		final JTable table = new JTable(model);
+		
+		JComboBox comboBox = new JComboBox(new MyComboBoxModel());
+		comboBox.setSelectedItem(netController.getDeviceName());
+		add(comboPanel, BorderLayout.NORTH);
+		comboPanel.add(comboBox, BorderLayout.EAST);
+		JTable table = new JTable(model);
 		table.setLayout(new BorderLayout());
 		add(new JScrollPane(table), BorderLayout.CENTER);
 
-		final JComboBox comboBox = new JComboBox(new MyComboBoxModel());
+
 		comboBox.addActionListener(
 				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+					@Override
+					public void actionPerformed(ActionEvent arg0) 
+					{
 						String selection = MyComboBoxModel.getName();
-						comboBox.setSelectedItem(selection);
-						table.updateUI();					
-						System.out.println("Selection is " + selection);
-						//Table t = new Table(netController);
-
-						Map<Integer, List<String>> devicesInfo = netController.getDeviceInfo("extintinfo", selection);
+						function = GetDeviceInfo.getFunction();
+						Map<Integer, List<String>> devicesInfo = netController.getDeviceInfo(function, selection);
 						
-						ToolsPanel.setDevicesInfo(devicesInfo);
-						
-						allTableModel.getValueAt(allTableModel.getRowCount(), 
-								allTableModel.getColumnCount());
-						//t.setRows(1);
-						//t.setColumns(16);
-						//t.createFrame("Extended Interface Information");
+						AllTableModel.setDeviceInfo(devicesInfo);;
 						
 					}
 				});
 
-		comboPanel.add(comboBox, BorderLayout.EAST);
-		add(comboPanel, BorderLayout.NORTH);
-		this.netController = netController;
 
 	}
 }
