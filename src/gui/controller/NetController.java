@@ -1,14 +1,11 @@
 package gui.controller;
 
 import gui.model.Server;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.yaml.snakeyaml.Yaml;
-
 import util.YAMLConverter;
 
 public class NetController {
@@ -24,17 +21,17 @@ public class NetController {
 	}
 	
 	
-	public Map<Integer, List<String>> getDeviceName(String deviceName, String func) throws IOException
+	public Map<Integer, List<String>> getDeviceName(String deviceName, String func) 
 	{
 		return getInfo(deviceName, func); 
 	}
 	
-	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) throws IOException
+	public Map<Integer, List<String>> getDeviceInfo(String deviceName, String func) 
 	{
 		return getInfo(deviceName, func); 
 	}
 	
-	public Map<Integer, List<String>> getInfo(String deviceName, String func) throws IOException
+	private Map<Integer, List<String>> getInfo(String deviceName, String func) 
 	{
 		String request = yamlConverter.deviceToNameRequest(func, deviceName);
 		System.out.println("sended " + request);
@@ -46,11 +43,5 @@ public class NetController {
 		
 		return data; 
 	}
-	
-	
-	public static void Sysout()
-		{
-			System.out.println("OUT");
-		}
 
 }

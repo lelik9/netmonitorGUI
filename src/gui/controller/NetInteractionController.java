@@ -33,7 +33,6 @@ public class NetInteractionController {
 		this.serverPort = serverPort;
 		
 		establishConnection();
-		
 	}
 	
 	public NetInteractionController(Server server) {
@@ -57,7 +56,7 @@ public class NetInteractionController {
 		try {
 			is = socket.getInputStream();
 		} catch (IOException e) {
-			System.out.println("Socket in broken! Alarm!");
+			System.out.println("Socket in is broken!");
 			e.printStackTrace();
 		}
 		
@@ -67,7 +66,7 @@ public class NetInteractionController {
 		try {
 			printWriter = new PrintWriter(socket.getOutputStream(), true);
 		} catch (IOException e) {
-			System.out.println("Socket out broken! Alarm!");
+			System.out.println("Socket out is broken!");
 		}
 	}
 	
@@ -80,29 +79,29 @@ public class NetInteractionController {
 	}
 	
 
-	public String receiveMessageFromServer() throws IOException {
+	public String receiveMessageFromServer() {
 			
 	    String message;
 	    String returnMessage = "{";
 
-		while(((message = br.readLine()) != null) && !("".equals(message)))
-			{
-				returnMessage = returnMessage.concat(message + ",");		
-			}
+		try {
+			while(((message = br.readLine()) != null) && !("".equals(message)))
+				{
+					returnMessage = returnMessage.concat(message + ",");		
+				}
+		} catch (IOException e) {
+			System.out.println("BufferReader is broken!");
+			e.printStackTrace();
+		}
 
 		return returnMessage + "}";
 	}
 		
-	public void sendMessageToServer(String message) throws IOException{
+	public void sendMessageToServer(String message) {
 				
 		printWriter.println(message);
 	}
-	
-	public void test()
-	{
-		System.out.println("WORK");
-	}
-		
+			
 	public int getServerPort() {
 		return serverPort;
 	}

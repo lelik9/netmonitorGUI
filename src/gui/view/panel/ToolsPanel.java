@@ -106,18 +106,11 @@ public class ToolsPanel extends JPanel {
 	        			{
 	        				Table t = new Table(netController);
 
-	        					try
-									{
-										devicesInfo = netController.getDeviceInfo("extintinfo", "7_yarus");
-			        					setDevicesInfo(devicesInfo);
-			        					
-			        					devicesName = netController.getDeviceName("devices", "no");
-			        					setDevicesName(devicesName);
-									} catch (IOException e1)
-									{
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
+	        					devicesInfo = netController.getDeviceInfo("extintinfo", "7_yarus");
+								setDevicesInfo(devicesInfo);
+								
+								devicesName = netController.getDeviceName("devices", "no");
+								setDevicesName(devicesName);
 	
 	        					t.setRows(1);
 	        					t.setColumns(16);
@@ -128,20 +121,13 @@ public class ToolsPanel extends JPanel {
 	        			{
 	        				Table t = new Table(netController);
 
-	        					try
-									{
-										devicesInfo = netController.getDeviceInfo("intinfo", "7_yarus");
-			        					setDevicesInfo(devicesInfo);
-			        					System.out.println(devicesInfo);
-			        					
-			        					devicesName = netController.getDeviceName("devices", "no");
-			        					setDevicesName(devicesName);
-			        					System.out.println(devicesName);
-									} catch (IOException e1)
-									{
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-									}
+	        					devicesInfo = netController.getDeviceInfo("intinfo", "7_yarus");
+								setDevicesInfo(devicesInfo);
+								System.out.println(devicesInfo);
+								
+								devicesName = netController.getDeviceName("devices", "no");
+								setDevicesName(devicesName);
+								System.out.println(devicesName);
 	
 	        					t.setRows(1);
 	        					t.setColumns(6);
