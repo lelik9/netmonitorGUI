@@ -37,7 +37,6 @@ public class MainFrame extends JFrame{
 
 	    // FIXME temporary solution
 	    showLoginDialog();
-	    serverConnect();
 	    
 	    initContextMenu();
 	    initPannels();	 
@@ -48,17 +47,29 @@ public class MainFrame extends JFrame{
 	private void showLoginDialog() {
 		JTextField username = new JTextField();
 		JTextField password = new JPasswordField();
+		JTextField host = new JTextField();
+		JTextField port = new JPasswordField();
 		Object[] message = {
 		    "Username:", username,
-		    "Password:", password
+		    "Password:", password,
+		    "Host:", host,
+		    "Port:", port
 		};
+		
+		username.setText("test");
+		password.setText("test");
+		host.setText("151.237.240.15");
+		port.setText("9123");
 		
 		int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
 		
 		if (option == JOptionPane.OK_OPTION) {
 			// FIXME check login procedure
-		    if (username.getText().equals("test") && password.getText().equals("test")) {
+		    if (username.getText().equals("test") && password.getText().equals("test")) 
+		    {
 		        System.out.println("Login successful");
+				Server server = new Server(host.getText(), Integer.valueOf( port.getText() ) );
+				netController = new NetController(server);
 		    } else {
 		        JOptionPane.showMessageDialog(this, "Login failed!");
 		        System.exit(0);
@@ -66,23 +77,6 @@ public class MainFrame extends JFrame{
 		}
 	}
 	
-	private void serverConnect()
-	{
-		JTextField host = new JTextField();
-		JTextField port = new JPasswordField();
-		Object[] message = {
-		    "Host:", host,
-		    "Port:", port
-		};
-		
-		int option = JOptionPane.showConfirmDialog(null, message, "Choose server", JOptionPane.OK_CANCEL_OPTION);
-		
-		if (option == JOptionPane.OK_OPTION) {
-			Server server = new Server("151.237.240.15",9123);
-		//	Server server = new Server(host.getText(), Integer.valueOf( port.getText() ) );
-			netController = new NetController(server);			
-		}
-	}
 
 	private void initPannels() {
 	

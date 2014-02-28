@@ -34,10 +34,6 @@ public class ToolsPanel extends JPanel {
 	private String[] networkElement = {"Interface info", "Extended interface info", "Vlan table", "Mac address table", "Arp table"};
 	private JList networkList = new JList(networkElement);
 	
-	private JButton troubleshootButton = new JButton("Troubleshoot");
-	private JButton maintainceButton = new JButton("Maintaince");
-	
-	private JButton deviceInfoButton = new JButton("Device Info request");
 		
 	private NetController netController;
 	private GetDeviceInfo getDeviceInfo;
@@ -97,6 +93,18 @@ public class ToolsPanel extends JPanel {
 	        			{
 	        				getDeviceInfo.GetDeviceInfo("intinfo", "7_yarus", "Interface information", 6);        			
 	        			}
+	        		if(selectedItem.equals("Vlan table"))
+        				{	
+        				getDeviceInfo.GetDeviceInfo("vlantable", "7_yarus", "Vlan table", 2);        			
+        				}
+	        		if(selectedItem.equals("Mac address table"))
+        				{
+        				getDeviceInfo.GetDeviceInfo("mactable", "7_yarus", "Mac address table", 3);        			
+        				}
+	        		if(selectedItem.equals("Arp table"))
+        				{
+        				getDeviceInfo.GetDeviceInfo("arptable", "7_yarus", "Arp table", 3);        			
+        				}
 	        	}
 	};
 	};
